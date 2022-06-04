@@ -26,14 +26,21 @@ const props = defineProps({
   &:hover {
     background-color: var(--in-brand-color-hover);
   }
-}
-.btn.edit {
-  background-color: #f9fafe;
-  color: var(--in-brand-color-accent);
-}
-.btn.delete {
-  background-color: orange;
-  color: #fff;
+
+  &.edit {
+    background-color: #f9fafe;
+    color: var(--in-brand-color-accent);
+    padding-inline: 20px;
+  }
+
+  &.delete {
+    background-color: var(--in-status-red);
+    padding-inline: 20px;
+    color: #fff;
+  }
+  &.default {
+    padding-inline: 20px;
+  }
 }
 
 .btn i {

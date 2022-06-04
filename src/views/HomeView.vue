@@ -28,7 +28,7 @@ const allInvoice = true;
       date="20 Dec 2021"
       client="John doe"
       :amount="2000"
-      status="paid" />
+      status="pending" />
   </section>
   <section class="empty" v-else>
     <img src="@/assets/images/empty.png" alt="" />
@@ -54,10 +54,11 @@ header {
   line-height: 1;
   font-size: 2.1rem;
   font-weight: 500;
+  color: var(--color-text-heading);
 }
 .heading-text p {
   font-size: 0.9rem;
-  color: var(--in-brand-color-accent);
+  color: var(--color-text-subheading);
 }
 
 .heading-actions {

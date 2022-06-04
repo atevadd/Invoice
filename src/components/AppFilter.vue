@@ -45,18 +45,23 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.heading-actions .filter {
+.filter {
   position: relative;
   margin-right: 20px;
+  cursor: pointer;
 }
-
+#toggle-dropdown {
+  cursor: pointer;
+}
 .heading-actions .filter #toggle-dropdown #dropdown:checked + label {
   color: var(--in-brand-color);
+  cursor: pointer;
 }
 
 .dropdown-text {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .dropdown-text i {
   display: inline-block;

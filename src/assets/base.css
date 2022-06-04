@@ -8,6 +8,9 @@
   --in-light-bg: #f8f8f8;
   --in-dark-bg: #141625;
 
+  --in-card-light-bg: #ffffff;
+  --in-card-dark-bg: #1e2139;
+
   --in-side-light-bg: #373b53;
   --in-side-dark-bg: #373b53;
 
@@ -23,7 +26,7 @@
   --in-color-heading: #0c0e16;
 
   --in-status-green: #33d69f;
-  --in-status-yellow: #ff8f00;
+  --in-status-red: #ec5757;
   --in-status-grey: #373b53;
 }
 
@@ -33,6 +36,8 @@
   --color-sidebar: var(--in-side-light-bg);
   --color-text-heading: var(--in-text-light-1);
   --color-text-subheading: var(--in-text-light-2);
+  --color-card-bg: var(--in-card-light-bg);
+  --color-text: var(--in-text-light-1);
 }
 
 [data-theme="dark"] {
@@ -40,16 +45,20 @@
   --color-sidebar: var(--in-side-dark-bg);
   --color-text-heading: var(--in-text-dark-1);
   --color-text-subheading: var(--in-text-dark-2);
+  --color-card-bg: var(--in-card-dark-bg);
+  --color-text: var(--in-text-dark-1);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--in-dark-bg);
     --color-sidebar: var(--in-side-dark-bg);
     --color-text-heading: var(--in-text-dark-1);
     --color-text-subheading: var(--in-text-dark-2);
+    --color-card-bg: var(--in-card-dark-bg);
+    --color-text: var(--in-text-dark-1);
   }
-}
+} */
 
 /*
   1. Use a more-intuitive box-sizing model.
@@ -82,6 +91,7 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--color-background);
 }
 /*
   6. Improve media defaults
