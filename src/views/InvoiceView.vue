@@ -1,10 +1,10 @@
 <template>
-<!-- back button -->
+  <!-- back button -->
   <button class="back">
     <i class="ri-arrow-left-s-line"></i><span>Go back</span>
   </button>
 
-<!-- page header -->
+  <!-- page header -->
   <header>
     <div class="status">
       <span class="status-text">Status</span>
@@ -19,7 +19,7 @@
   </header>
 
   <!-- Page content -->
-  section#content
+  <section id="content"></section>
 </template>
 
 <script setup>
