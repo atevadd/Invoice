@@ -1,0 +1,128 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --in-brand-color: #7c5dfa;
+  --in-brand-color-hover: #9277ff;
+  --in-brand-color-accent: #7e88c3;
+
+  /* background colors for light and dark theme */
+  --in-light-bg: #f8f8f8;
+  --in-dark-bg: #141625;
+
+  --in-side-light-bg: #373b53;
+  --in-side-dark-bg: #373b53;
+
+  --in-button-red: #272020;
+  --in-button-red-hover: #9277ff;
+
+  --in-text-light-1: #1e2139;
+  --in-text-light-2: #252945;
+
+  --in-text-dark-1: #dfe3fa;
+  --in-text-dark-2: #888eb0;
+
+  --in-color-heading: #0c0e16;
+
+  --in-status-green: #33d69f;
+  --in-status-yellow: #ff8f00;
+  --in-status-grey: #373b53;
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--in-light-bg);
+  --color-sidebar: var(--in-side-light-bg);
+  --color-text-heading: var(--in-text-light-1);
+  --color-text-subheading: var(--in-text-light-2);
+}
+
+[data-theme="dark"] {
+  --color-background: var(--in-dark-bg);
+  --color-sidebar: var(--in-side-dark-bg);
+  --color-text-heading: var(--in-text-dark-1);
+  --color-text-subheading: var(--in-text-dark-2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--in-dark-bg);
+    --color-sidebar: var(--in-side-dark-bg);
+    --color-text-heading: var(--in-text-dark-1);
+    --color-text-subheading: var(--in-text-dark-2);
+  }
+}
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "League Spartan", sans-serif;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html,
+body {
+  height: 100%;
+}
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  6. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+  8. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  text-decoration: none;
+}
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
