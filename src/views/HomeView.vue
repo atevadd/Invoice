@@ -9,14 +9,46 @@ import { useModalStore } from "../stores/modal";
 import { useInvoiceStore } from "../stores/invoice";
 import { countries } from "../assets/js/country.js";
 import { ref } from "vue";
+import { useToast } from "vue-toastification";
 
 // Store Instances
 const modalStore = useModalStore();
 const invoiceStore = useInvoiceStore();
 
+// Toast instance
+const toast = useToast();
+
 // Add new invoice item
 const addInvoice = () => {
-  invoiceStore.addInvoiceItem;
+  // Add new invoice item to the store
+  invoiceStore.addNewInvoice(invoiceStore.getInvoice);
+
+  // Clearing the invoice form
+  invoiceStore.clearInvoice();
+
+  // closing the modal
+  modalStore.closeModal();
+
+  // Showing the success message
+  toast("Invoice added successfully", {
+    position: "bottom-right",
+    timeout: 4000,
+    closeOnClick: true,
+    pauseOnFocusLoss: true,
+    pauseOnHover: true,
+    draggable: true,
+    draggablePercent: 0.6,
+    showCloseButtonOnHover: false,
+    hideProgressBar: false,
+    closeButton: "button",
+    icon: true,
+    rtl: false,
+  });
+};
+
+const allInvoices = () => {
+  // Get all invoices from the store
+  return invoiceStore.getAllInvoice();
 };
 </script>
 
@@ -34,14 +66,14 @@ const addInvoice = () => {
     </div>
   </header>
   <!-- The invoice listing here -->
-  <section class="invoice-list" v-if="invoiceStore.allInvoice">
+  <section class="invoice-list" v-if="invoiceStore.getAllInvoice">
     <InvoiceItem
-      v-for="item in 5"
+      v-for="item in allInvoices"
       :key="item"
       :itemid="item"
       code="#RT300"
-      date="20 Dec 2021"
-      client="John doe"
+      :date="item.invoiceDate"
+      :client="item.billToDate"
       :amount="2000"
       status="pending" />
   </section>
@@ -56,7 +88,7 @@ const addInvoice = () => {
 
   <!-- New Invoice modal -->
   <AppModal modal-name="New Invoice" class="new-modal">
-    <form @submit.prevent="useInvoiceStore.addNewInvoice">
+    <form @submit.prevent="addInvoice">
       <div class="bill-from">
         <h3>Bill From</h3>
         <AppInput

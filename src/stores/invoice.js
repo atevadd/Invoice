@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-// import { ref } from "vue";
-import { shallowRef } from "vue";
+import { ref } from "vue";
 
 export const useInvoiceStore = defineStore({
   id: "invoice",
@@ -28,13 +27,45 @@ export const useInvoiceStore = defineStore({
       ],
     },
     selectedInvoice: {},
-    allInvoice: shallowRef([]),
+    allInvoice: ref([]),
   }),
 
+  getters: {
+    getAllInvoice(state) {
+      return state.allInvoice;
+    },
+    getInvoice(state) {
+      return state.invoice;
+    },
+  },
   actions: {
-    addNewInvoice() {
-      this.allInvoice.push(this.invoice);
+    addNewInvoice(invoice) {
+      this.allInvoice.push(invoice);
       console.log("added invoice");
+    },
+    clearInvoice() {
+      this.invoice = {
+        billFromAddress: "",
+        billFromCity: "",
+        billFromCode: "",
+        billFromCountry: "",
+        billToName: "",
+        billToEmail: "",
+        billToAddress: "",
+        billToCity: "",
+        billToCode: "",
+        billToCountry: "",
+        invoiceDate: "",
+        paymentTerms: "",
+        projectDescription: "",
+        itemList: [
+          {
+            itemName: "",
+            qty: "",
+            price: "",
+          },
+        ],
+      };
     },
   },
 });
