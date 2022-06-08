@@ -2,16 +2,19 @@
 import AppStatus from "./AppStatus.vue";
 
 const props = defineProps({
+  id: Number,
   code: String,
   date: String,
   client: String,
   amount: Number,
   status: String,
 });
+
+const baseUrl = "/invoice/";
 </script>
 
 <template>
-  <RouterLink to="/" class="invoice-item">
+  <RouterLink :to="baseUrl + amount" class="invoice-item">
     <span class="invoice-code">{{ code }}</span>
     <span class="invoice-date">Due {{ date }}</span>
     <span class="invoice-client">{{ client }}</span>

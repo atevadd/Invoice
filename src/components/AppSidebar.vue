@@ -24,7 +24,8 @@ import AppIcon from "@/components/AppIcon.vue";
 .sidebar {
   width: 100%;
   background-color: var(--color-sidebar);
-  position: relative;
+  position: sticky;
+  top: 0;
   border-radius: 0 20px 20px 0;
   min-height: 100vh;
   display: flex;

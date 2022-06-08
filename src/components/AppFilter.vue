@@ -86,6 +86,45 @@ onMounted(() => {
   display: flex;
   align-items: flex-start;
   margin-bottom: 5px;
+
+  input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: #fff;
+    width: 14px;
+    height: 14px;
+    display: grid;
+    place-content: center;
+    border: 1px solid var(--in-brand-color);
+    border-radius: 0.15em;
+    position: relative;
+    padding: 5px;
+  }
+
+  input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 100ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--in-brand-color);
+    transform-origin: center;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: var(--in-brand-color);
+  }
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+    box-shadow: inset 1em 1em #fff;
+  }
+
+  & > input:checked + label {
+    color: var(--in-brand-color);
+  }
 }
 
 .dropdown-item input {
@@ -97,6 +136,7 @@ onMounted(() => {
   text-transform: capitalize;
   vertical-align: middle;
   line-height: 1.5;
+  cursor: pointer;
 }
 
 @keyframes slideup {

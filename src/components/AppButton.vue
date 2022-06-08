@@ -1,10 +1,15 @@
 <template>
-  <button class="btn" type="button"><slot></slot></button>
+  <button class="btn" :type="type"><slot></slot></button>
 </template>
 
 <script setup>
 const props = defineProps({
   name: String,
+  type: {
+    type: String,
+    default: "button",
+    required: false,
+  },
 });
 </script>
 
@@ -31,6 +36,10 @@ const props = defineProps({
     background-color: #f9fafe;
     color: var(--in-brand-color-accent);
     padding-inline: 20px;
+
+    &:hover {
+      background-color: darken($color: #f9fafe, $amount: 5%);
+    }
   }
 
   &.delete {
