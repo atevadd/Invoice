@@ -25,6 +25,7 @@ export const useInvoiceStore = defineStore({
           price: "",
         },
       ],
+      status: "paid",
     },
     selectedInvoice: {},
     allInvoice: ref([]),
@@ -41,7 +42,6 @@ export const useInvoiceStore = defineStore({
   actions: {
     addNewInvoice(invoice) {
       this.allInvoice.push(invoice);
-      console.log("added invoice");
     },
     clearInvoice() {
       this.invoice = {

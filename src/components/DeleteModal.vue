@@ -46,6 +46,7 @@ const modalStore = useModalStore();
     border-radius: 5px;
     padding: 35px;
     width: 35%;
+    animation: scale 0.4s ease;
 
     h2 {
       font-weight: 400;
@@ -63,6 +64,15 @@ const modalStore = useModalStore();
       justify-content: flex-end;
       margin-top: 25px;
     }
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>

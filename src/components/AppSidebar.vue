@@ -31,6 +31,7 @@ import AppIcon from "@/components/AppIcon.vue";
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  z-index: 99;
 }
 
 .bottom-nav-items {

@@ -10,13 +10,16 @@
 </template>
 
 <script setup>
+import { validate } from "../assets/js/validate";
+// import { validate } from "json-schema";
+import { ref, shallowRef } from "vue";
+
 const props = defineProps({
   id: String,
   type: String,
   labelName: String,
   modelValue: String,
 });
-
 defineEmits(["update:modelValue"]);
 </script>
 

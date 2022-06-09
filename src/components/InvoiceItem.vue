@@ -14,7 +14,9 @@ const baseUrl = "/invoice/";
 </script>
 
 <template>
-  <RouterLink :to="baseUrl + amount" class="invoice-item">
+  <RouterLink
+    :to="{ name: 'invoice', params: { id: id } }"
+    class="invoice-item">
     <span class="invoice-code">{{ code }}</span>
     <span class="invoice-date">Due {{ date }}</span>
     <span class="invoice-client">{{ client }}</span>

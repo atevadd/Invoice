@@ -46,6 +46,8 @@ const modalStore = useModalStore();
     border-radius: 0 20px 20px 0;
     padding: 30px 35px;
     overflow-y: auto;
+    animation: modal 0.6s ease;
+    transition: 0.4s ease;
 
     // Customising the scrollbar for chrome and other webkit browsers
     &::-webkit-scrollbar {
@@ -68,6 +70,15 @@ const modalStore = useModalStore();
         font-weight: 400;
       }
     }
+  }
+}
+
+@keyframes modal {
+  0% {
+    transform: translateX(-70%);
+  }
+  100% {
+    transform: translateX(0%);
   }
 }
 </style>

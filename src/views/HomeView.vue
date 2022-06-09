@@ -8,7 +8,7 @@ import AppDropdown from "../components/AppDropdown.vue";
 import { useModalStore } from "../stores/modal";
 import { useInvoiceStore } from "../stores/invoice";
 import { countries } from "../assets/js/country.js";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useToast } from "vue-toastification";
 
 // Store Instances
@@ -17,6 +17,9 @@ const invoiceStore = useInvoiceStore();
 
 // Toast instance
 const toast = useToast();
+
+// ALl invoices from the store
+let allInvoices = ref(invoiceStore.getAllInvoice);
 
 // Add new invoice item
 const addInvoice = () => {
@@ -46,9 +49,8 @@ const addInvoice = () => {
   });
 };
 
-const allInvoices = () => {
-  // Get all invoices from the store
-  return invoiceStore.getAllInvoice();
+const totalPrice = (price, qty) => {
+  return Number(price) * Number(qty);
 };
 </script>
 
@@ -66,16 +68,17 @@ const allInvoices = () => {
     </div>
   </header>
   <!-- The invoice listing here -->
-  <section class="invoice-list" v-if="invoiceStore.getAllInvoice">
+  <section class="invoice-list" v-if="allInvoices.length > 0">
     <InvoiceItem
-      v-for="item in allInvoices"
-      :key="item"
-      :itemid="item"
+      v-for="(item, index) in allInvoices"
+      :id="index"
+      :key="index"
+      :itemid="index"
       code="#RT300"
       :date="item.invoiceDate"
-      :client="item.billToDate"
-      :amount="2000"
-      status="pending" />
+      :client="item.billToName"
+      :amount="totalPrice(item.itemList.price, item.itemList.qty)"
+      :status="item.status" />
   </section>
   <section class="empty" v-else>
     <img src="@/assets/images/empty.png" alt="" />
@@ -191,10 +194,10 @@ const allInvoices = () => {
               <AppInput type="text" labelName="" v-model="items.itemName" />
             </td>
             <td>
-              <AppInput type="tel" labelName="" v-model="items.qty" />
+              <AppInput type="number" labelName="" v-model="items.qty" />
             </td>
             <td>
-              <AppInput type="tel" labelName="" v-model="items.price" />
+              <AppInput type="number" labelName="" v-model="items.price" />
             </td>
             <td>
               <p>{{ 0 || items.qty * items.price }}</p>

@@ -187,10 +187,18 @@ import DeleteModal from "../components/DeleteModal.vue";
 import { RouterLink } from "vue-router";
 import { useModalStore } from "../stores/modal";
 import { countries } from "../assets/js/country.js";
+import { router } from "vue-router";
 
 const goBack = () => {
   history.back();
 };
+
+// page prop
+const props = defineProps({
+  invoiceDetails: String,
+});
+
+// const modal =
 
 const modalStore = useModalStore();
 </script>
