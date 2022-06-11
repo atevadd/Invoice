@@ -49,6 +49,18 @@ const addInvoice = () => {
   });
 };
 
+const addMetaData = () => {
+  invoiceStore.invoice.itemList.push({
+    name: "",
+    quantity: "",
+    price: "",
+  });
+};
+
+const removeMetaData = (key) => {
+  invoiceStore.invoice.itemList.splice(key, 1);
+};
+
 const totalPrice = (price, qty) => {
   return Number(price) * Number(qty);
 };
@@ -200,16 +212,21 @@ const totalPrice = (price, qty) => {
               <AppInput type="number" labelName="" v-model="items.price" />
             </td>
             <td>
-              <p>{{ 0 || items.qty * items.price }}</p>
+              <p v-if="items.qty == ''">{{ 0 }}</p>
+              <p v-else>{{ items.price * items.qty || 0 }}</p>
             </td>
             <td>
-              <i class="ri-delete-bin-5-fill"></i>
+              <i
+                class="ri-delete-bin-5-fill"
+                @click="removeMetaData(index)"></i>
             </td>
           </tr>
         </table>
 
         <!-- Add item button -->
-        <AppButton class="add-item"> Add New item</AppButton>
+        <AppButton class="add-item" @click="addMetaData">
+          Add New item</AppButton
+        >
       </div>
 
       <footer>
@@ -328,10 +345,12 @@ header {
         color: var(--in-brand-color-accent);
         text-transform: capitalize;
       }
+      tr {
+        animation: reveal 0.5s ease;
+      }
 
       td {
         padding-right: 5px;
-        // border: 1px solid red;
         margin-right: 5px;
         vertical-align: middle;
 
@@ -385,6 +404,17 @@ header {
         }
       }
     }
+  }
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    // transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    // transform: translateY(0px);
   }
 }
 </style>

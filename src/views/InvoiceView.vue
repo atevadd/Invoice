@@ -25,27 +25,27 @@
     <div class="invoice-details">
       <div class="invoice-code">
         <span>#XM9141</span>
-        <p>Graphic design</p>
+        <p>{{ invoiceDetails.projectDescription }}</p>
       </div>
       <div class="invoice-address">
-        <p>19 Union Terrace London E1 3EZ United Kingdom</p>
+        <p>{{ invoiceDetails.billFromAddress }}</p>
       </div>
       <div class="invoice-date">
         <p>Invoice date</p>
-        <span>21 Aug 2021</span>
+        <span>{{ invoiceDetails.invoiceDate }}</span>
       </div>
       <div class="invoice-reciever">
         <p>Bill To</p>
-        <span>Alex Grim</span>
-        <p>84 Church Way Bradford BD1 9PB United Kingdom</p>
+        <span>{{ invoiceDetails.billToName }}</span>
+        <p>{{ invoiceDetails.billToAddress }}</p>
       </div>
       <div class="invoice-sender">
         <p>Sent To</p>
-        <span>Alex Grim</span>
+        <span>{{ invoiceDetails.billToName }}</span>
       </div>
       <div class="invoice-payment-date">
         <p>Payment date</p>
-        <span>20 sep 2021</span>
+        <span>{{ invoiceDetails.paymentTerms }}</span>
       </div>
     </div>
     <div class="invoice-summary">
@@ -56,17 +56,11 @@
           <th>Price</th>
           <th>Total</th>
         </tr>
-        <tr>
-          <td>Banner Design</td>
-          <td>1</td>
-          <td>$156.00</td>
-          <td>$156.00</td>
-        </tr>
-        <tr>
-          <td>Email Design</td>
-          <td>2</td>
-          <td>$200.00</td>
-          <td>$400.00</td>
+        <tr v-for="(item, index) in invoiceDetails.itemList" :key="index">
+          <td>{{ item.itemName }}</td>
+          <td>{{ item.qty }}</td>
+          <td>${{ item.price }}</td>
+          <td>${{ item.qty * item.price }}</td>
         </tr>
       </table>
       <footer>
@@ -186,8 +180,9 @@ import AppDropdown from "../components/AppDropdown.vue";
 import DeleteModal from "../components/DeleteModal.vue";
 import { RouterLink } from "vue-router";
 import { useModalStore } from "../stores/modal";
-import { countries } from "../assets/js/country.js";
-import { router } from "vue-router";
+import { useInvoiceStore } from "../stores/invoice";
+import { useRoute } from "vue-router";
+import { onMounted } from "vue";
 
 const goBack = () => {
   history.back();
@@ -198,9 +193,19 @@ const props = defineProps({
   invoiceDetails: String,
 });
 
-// const modal =
+// Route object
+const route = useRoute();
 
+onMounted(() => {
+  console.log(route.params.id);
+});
+
+// The Stores
 const modalStore = useModalStore();
+const invoiceStore = useInvoiceStore();
+
+const invoiceDetails = invoiceStore.getAllInvoice[route.params.id];
+console.log(invoiceDetails);
 </script>
 
 <style lang="scss" scoped>
