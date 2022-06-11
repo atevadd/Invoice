@@ -70,7 +70,9 @@ const totalPrice = (price, qty) => {
   <header>
     <div class="heading-text">
       <h1 class="heading">Invoice</h1>
-      <p class="subheading">There are a total of 7 invoices</p>
+      <p class="subheading">
+        There are a total of {{ allInvoices.length }} invoices
+      </p>
     </div>
     <div class="heading-actions">
       <AppFilter />
