@@ -23,11 +23,17 @@ import AppSidebar from "./components/AppSidebar.vue";
 }
 main {
   position: relative;
-  /* border: 2px solid red; */
 }
 .container {
   width: 65%;
   margin-inline: auto;
   margin-top: 3%;
+}
+
+@media screen and(max-width: 450px) {
+  #page {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

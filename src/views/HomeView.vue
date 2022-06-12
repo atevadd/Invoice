@@ -10,6 +10,7 @@ import { useInvoiceStore } from "../stores/invoice";
 import { countries } from "../assets/js/country.js";
 import { ref, computed } from "vue";
 import { useToast } from "vue-toastification";
+import { calculateTotalPrice } from "../assets/js/helper";
 
 // Store Instances
 const modalStore = useModalStore();
@@ -57,12 +58,9 @@ const addMetaData = () => {
   });
 };
 
+// remove form fie
 const removeMetaData = (key) => {
   invoiceStore.invoice.itemList.splice(key, 1);
-};
-
-const totalPrice = (price, qty) => {
-  return Number(price) * Number(qty);
 };
 </script>
 
@@ -88,11 +86,11 @@ const totalPrice = (price, qty) => {
       :id="index"
       :key="index"
       :itemid="index"
-      code="#RT300"
+      code="#RT"
       :date="item.invoiceDate"
       :client="item.billToName"
-      :amount="totalPrice(item.itemList.price, item.itemList.qty)"
-      :status="item.status" />
+      :amount="calculateTotalPrice(item.itemList)"
+      status="paid" />
   </section>
   <section class="empty" v-else>
     <img src="@/assets/images/empty.png" alt="" />

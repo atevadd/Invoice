@@ -6,7 +6,7 @@ const props = defineProps({
   code: String,
   date: String,
   client: String,
-  amount: Number,
+  amount: String,
   status: String,
 });
 
@@ -17,11 +17,11 @@ const baseUrl = "/invoice/";
   <RouterLink
     :to="{ name: 'invoice', params: { id: id } }"
     class="invoice-item">
-    <span class="invoice-code">{{ code }}</span>
+    <span class="invoice-code">{{ code }}{{ id }}</span>
     <span class="invoice-date">Due {{ date }}</span>
     <span class="invoice-client">{{ client }}</span>
     <span class="invoice-amount">${{ amount }}</span>
-    <AppStatus :status="status" />
+    <AppStatus status="paid" />
     <span class="invoice-arrow"><i class="ri-arrow-right-s-line"></i></span>
   </RouterLink>
 </template>

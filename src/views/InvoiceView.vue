@@ -8,7 +8,7 @@
   <header>
     <div class="status">
       <span class="status-text">Status</span>
-      <AppStatus status="pending" />
+      <AppStatus status="paid" />
     </div>
 
     <div class="actions">
@@ -59,13 +59,17 @@
         <tr v-for="(item, index) in invoiceDetails.itemList" :key="index">
           <td>{{ item.itemName }}</td>
           <td>{{ item.qty }}</td>
-          <td>${{ item.price }}</td>
-          <td>${{ item.qty * item.price }}</td>
+          <td>
+            ${{ item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}
+          </td>
+          <td>${{ total(item.qty, item.price) }}</td>
         </tr>
       </table>
       <footer>
         <h3>Amount Due</h3>
-        <p class="total-amount">$556.00</p>
+        <p class="total-amount">
+          ${{ calculateTotalPrice(invoiceDetails.itemList) }}
+        </p>
       </footer>
     </div>
   </section>
@@ -183,6 +187,8 @@ import { useModalStore } from "../stores/modal";
 import { useInvoiceStore } from "../stores/invoice";
 import { useRoute } from "vue-router";
 import { onMounted } from "vue";
+import { countries } from "../assets/js/country";
+import { calculateTotalPrice, total } from "../assets/js/helper";
 
 const goBack = () => {
   history.back();
@@ -196,16 +202,11 @@ const props = defineProps({
 // Route object
 const route = useRoute();
 
-onMounted(() => {
-  console.log(route.params.id);
-});
-
 // The Stores
 const modalStore = useModalStore();
 const invoiceStore = useInvoiceStore();
 
 const invoiceDetails = invoiceStore.getAllInvoice[route.params.id];
-console.log(invoiceDetails);
 </script>
 
 <style lang="scss" scoped>
@@ -293,6 +294,10 @@ header {
         width: 50%;
         // border: 1px solid red;
       }
+    }
+
+    .invoice-code {
+      margin-bottom: 15px;
     }
 
     p {
