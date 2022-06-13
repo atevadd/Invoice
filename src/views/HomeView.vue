@@ -10,7 +10,11 @@ import { useInvoiceStore } from "../stores/invoice";
 import { countries } from "../assets/js/country.js";
 import { ref, computed } from "vue";
 import { useToast } from "vue-toastification";
-import { calculateTotalPrice } from "../assets/js/helper";
+import {
+  calculateTotalPrice,
+  addMetaData,
+  removeMetaData,
+} from "../assets/js/helper";
 
 // Store Instances
 const modalStore = useModalStore();
@@ -36,8 +40,8 @@ const addInvoice = () => {
   // Showing the success message
   toast("Invoice added successfully", {
     position: "bottom-right",
-    timeout: 4000,
-    closeOnClick: true,
+    timeout: 3000,
+    closeOnClick: false,
     pauseOnFocusLoss: true,
     pauseOnHover: true,
     draggable: true,
@@ -48,19 +52,6 @@ const addInvoice = () => {
     icon: true,
     rtl: false,
   });
-};
-
-const addMetaData = () => {
-  invoiceStore.invoice.itemList.push({
-    name: "",
-    quantity: "",
-    price: "",
-  });
-};
-
-// remove form fie
-const removeMetaData = (key) => {
-  invoiceStore.invoice.itemList.splice(key, 1);
 };
 </script>
 
@@ -218,13 +209,17 @@ const removeMetaData = (key) => {
             <td>
               <i
                 class="ri-delete-bin-5-fill"
-                @click="removeMetaData(index)"></i>
+                @click="
+                  removeMetaData(index, invoiceStore.invoice.itemList)
+                "></i>
             </td>
           </tr>
         </table>
 
         <!-- Add item button -->
-        <AppButton class="add-item" @click="addMetaData">
+        <AppButton
+          class="add-item"
+          @click="addMetaData(invoiceStore.invoice.itemList)">
           Add New item</AppButton
         >
       </div>

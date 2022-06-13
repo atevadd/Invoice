@@ -20,7 +20,8 @@
 import AppIcon from "@/components/AppIcon.vue";
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/scss/_mixins.scss";
 .sidebar {
   width: 100%;
   background-color: var(--color-sidebar);
@@ -32,10 +33,39 @@ import AppIcon from "@/components/AppIcon.vue";
   flex-direction: column;
   align-items: stretch;
   z-index: 99;
+
+  @include mobile {
+    position: relative;
+    min-height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 0px;
+    align-items: center;
+  }
 }
 
 .bottom-nav-items {
+  position: relative;
   margin-top: auto;
+
+  @include mobile {
+    display: flex;
+    align-items: center;
+    // border: 1px solid red;
+    margin: 0;
+    align-self: stretch;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 45%;
+      transform: translateX(-50%);
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background-color: #494e6e;
+    }
+  }
 }
 
 .bottom-nav-items hr {
@@ -45,6 +75,11 @@ import AppIcon from "@/components/AppIcon.vue";
   background-color: #494e6e;
   border: none;
   height: 2px;
+
+  @include mobile {
+    display: none;
+    transform: rotateZ(90deg);
+  }
 }
 
 .bottom-nav-items .theme-changer {
@@ -52,6 +87,11 @@ import AppIcon from "@/components/AppIcon.vue";
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include mobile {
+    margin: 0;
+    margin-inline: 30px;
+  }
 }
 
 .bottom-nav-items .theme-changer i {
@@ -60,10 +100,16 @@ import AppIcon from "@/components/AppIcon.vue";
 }
 
 .bottom-nav-items img {
+  position: relative;
   display: block;
   width: 40px;
   height: 40px;
   margin-inline: auto;
   margin-bottom: 20px;
+
+  @include mobile {
+    margin: 0;
+    margin-inline: 30px;
+  }
 }
 </style>

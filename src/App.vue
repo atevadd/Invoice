@@ -13,13 +13,20 @@ import AppSidebar from "./components/AppSidebar.vue";
   </section>
 </template>
 
-<style>
+<style lang="scss">
+@import "@/assets/scss/_mixins.scss";
 @import "@/assets/base.css";
 
 #page {
   display: grid;
   grid-template-columns: 7% 93%;
   align-items: flex-start;
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 }
 main {
   position: relative;
@@ -28,12 +35,5 @@ main {
   width: 65%;
   margin-inline: auto;
   margin-top: 3%;
-}
-
-@media screen and(max-width: 450px) {
-  #page {
-    display: flex;
-    flex-direction: column;
-  }
 }
 </style>

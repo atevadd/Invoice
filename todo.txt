@@ -1,2 +1,2 @@
  - Edit selected invoice
- - 
+ - make the website responsive

@@ -17,3 +17,17 @@ export const total = (qty, price) => {
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+// add new input field to item list
+export const addMetaData = (list) => {
+  list.push({
+    name: "",
+    quantity: "",
+    price: "",
+  });
+};
+
+// remove form fie
+export const removeMetaData = (key, list) => {
+  list.splice(key, 1);
+};

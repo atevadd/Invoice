@@ -79,31 +79,65 @@
     <form>
       <div class="bill-from">
         <h3>Bill From</h3>
-        <AppInput type="text" id="b-st-addr" labelName="Street-Address" />
+        <AppInput
+          type="text"
+          id="b-st-addr"
+          labelName="Street-Address"
+          v-model="invoiceDetails.billFromAddress" />
         <div class="group">
-          <AppInput type="text" id="b-city" labelName="City" />
-          <AppInput type="text" id="b-p-code" labelName="Post Code" />
+          <AppInput
+            type="text"
+            id="b-city"
+            labelName="City"
+            v-model="invoiceDetails.billFromCity" />
+          <AppInput
+            type="text"
+            id="b-p-code"
+            labelName="Post Code"
+            v-model="invoiceDetails.billFromCode" />
           <AppDropdown
             type="text"
             id="b-p-country"
             labelName="Country"
-            :list-items="countries" />
+            :list-items="countries"
+            v-model="invoiceDetails.billFromCountry" />
         </div>
       </div>
       <div class="bill-to">
         <h3>Bill To</h3>
-        <AppInput type="text" id="b-client-name" labelName="Client's name" />
-        <AppInput type="email" id="b-client-email" labelName="Client's email" />
-        <AppInput type="text" id="b-client-addr" labelName="Street Address" />
+        <AppInput
+          type="text"
+          id="b-client-name"
+          labelName="Client's name"
+          v-model="invoiceDetails.billToName" />
+        <AppInput
+          type="email"
+          id="b-client-email"
+          labelName="Client's email"
+          v-model="invoiceDetails.billToEmail" />
+        <AppInput
+          type="text"
+          id="b-client-addr"
+          labelName="Street Address"
+          v-model="invoiceDetails.billFromAddress" />
 
         <div class="group">
-          <AppInput type="text" id="b-client-city" labelName="City" />
-          <AppInput type="text" id="b-client-code" labelName="Post code" />
+          <AppInput
+            type="text"
+            id="b-client-city"
+            labelName="City"
+            v-model="invoiceDetails.billToCity" />
+          <AppInput
+            type="text"
+            id="b-client-code"
+            labelName="Post code"
+            v-model="invoiceDetails.billToCode" />
           <AppDropdown
             type="text"
             id="b-client-country"
             labelName="Country"
-            :list-items="countries" />
+            :list-items="countries"
+            v-model="invoiceDetails.billToCountry" />
         </div>
       </div>
       <div class="invoice-det">
@@ -113,12 +147,14 @@
             type="text"
             id="in-terms"
             labelName="Payment Terms"
-            :list-items="['5 days', '10 days']" />
+            :list-items="['5 days', '10 days']"
+            v-model="invoiceDetails.paymentTerms" />
         </div>
         <AppInput
           type="text"
           id="b-client-code"
-          labelName="Project Description" />
+          labelName="Project Description"
+          v-model="invoiceDetails.projectDescription" />
       </div>
 
       <div class="item-list">
@@ -133,27 +169,34 @@
             <th>Total</th>
             <th></th>
           </tr>
-          <tr>
+          <tr v-for="(items, index) in invoiceDetails.itemList" :key="index">
             <td>
-              <AppInput type="text" labelName="" />
+              <AppInput type="text" labelName="" v-model="items.itemName" />
             </td>
             <td>
-              <AppInput type="tel" labelName="" />
+              <AppInput type="number" labelName="" v-model="items.qty" />
             </td>
             <td>
-              <AppInput type="tel" labelName="" />
+              <AppInput type="number" labelName="" v-model="items.price" />
             </td>
             <td>
-              <p>1000</p>
+              <p v-if="items.qty == ''">{{ 0 }}</p>
+              <p v-else>{{ items.price * items.qty || 0 }}</p>
             </td>
             <td>
-              <i class="ri-delete-bin-5-fill"></i>
+              <i
+                class="ri-delete-bin-5-fill"
+                @click="removeMetaData(index, invoiceDetails.itemList)"></i>
             </td>
           </tr>
         </table>
 
         <!-- Add item button -->
-        <AppButton class="add-item"> Add New item</AppButton>
+        <AppButton
+          class="add-item"
+          @click="addMetaData(invoiceDetails.itemList)">
+          Add New item</AppButton
+        >
       </div>
 
       <footer>
@@ -188,7 +231,12 @@ import { useInvoiceStore } from "../stores/invoice";
 import { useRoute } from "vue-router";
 import { onMounted } from "vue";
 import { countries } from "../assets/js/country";
-import { calculateTotalPrice, total } from "../assets/js/helper";
+import {
+  calculateTotalPrice,
+  total,
+  addMetaData,
+  removeMetaData,
+} from "../assets/js/helper";
 
 const goBack = () => {
   history.back();

@@ -14,7 +14,8 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/scss/_mixins.scss";
 .icon {
   align-self: center;
   background-color: var(--in-brand-color);
@@ -24,5 +25,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include mobile {
+    width: 100px;
+  }
 }
 </style>
