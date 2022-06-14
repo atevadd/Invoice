@@ -75,7 +75,7 @@ onMounted(() => {
   border-radius: 5px;
   box-shadow: 0 3px 13px rgba(0, 0, 0, 0.2);
   padding: 10px 40px 10px 20px;
-  z-index: 100;
+  z-index: 90;
 }
 
 .filter-dropdown.active {

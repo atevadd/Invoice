@@ -36,6 +36,7 @@ const modalStore = useModalStore();
   height: 10000%;
   max-height: 100vh;
   background-color: rgba($color: #000000, $alpha: 0.5);
+  z-index: 99;
   //   display: none;
 
   &-container {

@@ -76,7 +76,7 @@
 
   <!-- New Invoice modal -->
   <AppModal modal-name="Edit Invoice" class="edit-modal">
-    <form>
+    <form @submit.prevent="editInvoice">
       <div class="bill-from">
         <h3>Bill From</h3>
         <AppInput
@@ -142,7 +142,11 @@
       </div>
       <div class="invoice-det">
         <div class="group">
-          <AppInput type="date" id="in-date" labelName="Invoice Date" />
+          <AppInput
+            type="date"
+            id="in-date"
+            labelName="Invoice Date"
+            v-model="invoiceDetails.invoiceDate" />
           <AppDropdown
             type="text"
             id="in-terms"
@@ -171,17 +175,23 @@
           </tr>
           <tr v-for="(items, index) in invoiceDetails.itemList" :key="index">
             <td>
-              <AppInput type="text" labelName="" v-model="items.itemName" />
+              <AppInput type="text" v-model="items.itemName" />
             </td>
             <td>
-              <AppInput type="number" labelName="" v-model="items.qty" />
+              <AppInput type="number" v-model="items.qty" />
             </td>
             <td>
-              <AppInput type="number" labelName="" v-model="items.price" />
+              <AppInput type="number" v-model="items.price" />
             </td>
             <td>
               <p v-if="items.qty == ''">{{ 0 }}</p>
-              <p v-else>{{ items.price * items.qty || 0 }}</p>
+              <p v-else>
+                {{
+                  (items.price * items.qty)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",") || 0
+                }}
+              </p>
             </td>
             <td>
               <i
@@ -200,20 +210,18 @@
       </div>
 
       <footer>
-        <div class="left">
-          <!-- <AppButton class="edit" @click="modalStore.closeModal"
-          >Discard</AppButton
-        > -->
-        </div>
+        <div class="left"></div>
         <div class="right">
-          <AppButton class="edit">Cancel</AppButton>
+          <AppButton class="edit" @click="modalStore.closeModal"
+            >Cancel</AppButton
+          >
           <AppButton class="btn" type="submit">Save changes</AppButton>
         </div>
       </footer>
     </form>
   </AppModal>
 
-  <DeleteModal />
+  <DeleteModal :invoice-id="route.params.id" />
 </template>
 
 <script setup>
@@ -254,7 +262,16 @@ const route = useRoute();
 const modalStore = useModalStore();
 const invoiceStore = useInvoiceStore();
 
+// Selecting the current invoice
 const invoiceDetails = invoiceStore.getAllInvoice[route.params.id];
+
+// Editing the current invoice
+const editInvoice = () => {
+  invoiceStore.editCurrentInvoice(route.params.id, invoiceDetails);
+
+  // closing the modal
+  modalStore.closeModal();
+};
 </script>
 
 <style lang="scss" scoped>

@@ -13,7 +13,9 @@
         <AppButton class="edit" @click="modalStore.closeDeleteModal"
           >Cancel</AppButton
         >
-        <AppButton class="delete">Delete</AppButton>
+        <AppButton class="delete" @click="deleteInvoice(invoiceId)"
+          >Delete</AppButton
+        >
       </div>
     </div>
   </div>
@@ -22,8 +24,47 @@
 <script setup>
 import AppButton from "./AppButton.vue";
 import { useModalStore } from "../stores/modal";
+import { useInvoiceStore } from "../stores/invoice";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 
 const modalStore = useModalStore();
+const invoiceStore = useInvoiceStore();
+
+const props = defineProps({
+  invoiceId: Number,
+});
+
+// Route object
+const router = useRouter();
+
+// Toast instance
+const toast = useToast();
+
+// Delete invoice
+const deleteInvoice = (id) => {
+  invoiceStore.deleteCurrentInvoice(id);
+  router.push({ name: "home" });
+
+  // Showing the success message
+  toast.success("Invoice Delete successfully", {
+    position: "bottom-right",
+    timeout: 3000,
+    closeOnClick: false,
+    pauseOnFocusLoss: true,
+    pauseOnHover: true,
+    draggable: true,
+    draggablePercent: 0.6,
+    showCloseButtonOnHover: false,
+    hideProgressBar: true,
+    closeButton: false,
+    icon: true,
+    rtl: false,
+  });
+
+  // close modal
+  modalStore.closeDeleteModal();
+};
 </script>
 
 <style lang="scss" scoped>

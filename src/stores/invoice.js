@@ -67,5 +67,13 @@ export const useInvoiceStore = defineStore({
         ],
       };
     },
+    editCurrentInvoice(id, obj) {
+      this.allInvoice[id] = obj;
+      console.log("Invoice has been updated");
+    },
+    deleteCurrentInvoice(id) {
+      this.allInvoice.splice(id, 1);
+      console.log("Invoice has been deleted");
+    },
   },
 });

@@ -38,7 +38,7 @@ const addInvoice = () => {
   modalStore.closeModal();
 
   // Showing the success message
-  toast("Invoice added successfully", {
+  toast.success("Invoice added successfully", {
     position: "bottom-right",
     timeout: 3000,
     closeOnClick: false,
@@ -47,8 +47,8 @@ const addInvoice = () => {
     draggable: true,
     draggablePercent: 0.6,
     showCloseButtonOnHover: false,
-    hideProgressBar: false,
-    closeButton: "button",
+    hideProgressBar: true,
+    closeButton: false,
     icon: true,
     rtl: false,
   });
