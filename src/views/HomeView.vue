@@ -59,14 +59,23 @@ const addInvoice = () => {
   <header>
     <div class="heading-text">
       <h1 class="heading">Invoice</h1>
-      <p class="subheading">
-        There are a total of {{ allInvoices.length }} invoices
+      <p class="subheading" v-if="allInvoices.length > 1">
+        <span class="hide">There are a total of </span>
+        <span>{{ allInvoices.length }} invoices</span>
+      </p>
+      <p class="subheading" v-else-if="allInvoices.length == 1">
+        <span class="hide">There are a total of </span>
+        <span>{{ allInvoices.length }} invoice</span>
+      </p>
+      <p class="subheading" v-else-if="allInvoices.length == 0">
+        <span>No invoice</span>
       </p>
     </div>
     <div class="heading-actions">
       <AppFilter />
-      <AppButton @click="modalStore.openModal"
-        ><i class="ri-add-line"></i> <span>New Invoice</span></AppButton
+      <AppButton @click="modalStore.openModal" class="new-btn"
+        ><i class="ri-add-line"></i>
+        <span>New <span class="inner">Invoice</span></span></AppButton
       >
     </div>
   </header>
@@ -95,6 +104,9 @@ const addInvoice = () => {
   <!-- New Invoice modal -->
   <AppModal modal-name="New Invoice" class="new-modal">
     <form @submit.prevent="addInvoice">
+      <span class="close-btn" @click="modalStore.closeModal"
+        ><i class="ri-close-line"></i
+      ></span>
       <div class="bill-from">
         <h3>Bill From</h3>
         <AppInput
@@ -163,6 +175,7 @@ const addInvoice = () => {
             type="date"
             id="in-date"
             labelName="Invoice Date"
+            class="date"
             v-model="invoiceStore.invoice.invoiceDate" />
           <AppDropdown
             type="text"
@@ -240,6 +253,8 @@ const addInvoice = () => {
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/_mixins.scss";
+
 header {
   position: relative;
   width: 100%;
@@ -247,6 +262,10 @@ header {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 50px;
+
+  @include mobile {
+    margin-bottom: 40px;
+  }
 }
 
 .heading-text h1 {
@@ -260,10 +279,22 @@ header {
   color: var(--color-text-subheading);
 }
 
+.hide {
+  @include mobile {
+    display: none;
+  }
+}
+
 .heading-actions {
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.inner {
+  @include mobile {
+    display: none;
+  }
 }
 
 .invoice-list {
@@ -291,6 +322,19 @@ header {
 }
 
 .new-modal {
+  .close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+
+    i {
+      font-size: 1.8rem;
+    }
+
+    @include mobile {
+      display: inline-block;
+    }
+  }
   h3 {
     color: var(--in-brand-color-accent);
     font-weight: 500;
@@ -310,6 +354,21 @@ header {
     align-items: center;
     justify-content: space-between;
     column-gap: 20px;
+
+    @include mobile {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .date {
+      @include mobile {
+        grid-column: 1 / span 2;
+      }
+    }
+
+    .input-box:last-child {
+      grid-column: 1 / span 2;
+    }
   }
   .invoice-details {
     margin-bottom: 30px;

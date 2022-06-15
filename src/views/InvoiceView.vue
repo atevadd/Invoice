@@ -16,7 +16,7 @@
       <AppButton class="delete" @click="modalStore.openDeleteModal"
         >Delete</AppButton
       >
-      <AppButton class="default">Mark as read</AppButton>
+      <AppButton class="default">Mark as Paid</AppButton>
     </div>
   </header>
 
@@ -77,6 +77,9 @@
   <!-- New Invoice modal -->
   <AppModal modal-name="Edit Invoice" class="edit-modal">
     <form @submit.prevent="editInvoice">
+      <span class="close-btn" @click="modalStore.closeModal"
+        ><i class="ri-close-line"></i
+      ></span>
       <div class="bill-from">
         <h3>Bill From</h3>
         <AppInput
@@ -275,6 +278,7 @@ const editInvoice = () => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/_mixins.scss";
 .back {
   background-color: transparent;
   outline: none;
@@ -349,8 +353,18 @@ header {
       display: flex;
       justify-content: flex-end;
 
+      @include mobile {
+        grid-column: 1 / 4;
+        justify-content: flex-start;
+        text-align: left;
+      }
+
       p {
         width: 15%;
+        @include mobile {
+          width: 50%;
+          border: 1px solid red;
+        }
       }
     }
 
@@ -363,6 +377,16 @@ header {
 
     .invoice-code {
       margin-bottom: 15px;
+
+      @include mobile {
+        grid-column: 1 / 4;
+        justify-content: flex-start;
+      }
+    }
+
+    .invoice-date {
+      grid-column: 1 / 2;
+      grid-row: 3 / 4;
     }
 
     p {
@@ -435,6 +459,19 @@ header {
 }
 
 .edit-modal {
+  .close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+
+    i {
+      font-size: 1.8rem;
+    }
+
+    @include mobile {
+      display: inline-block;
+    }
+  }
   h3 {
     color: var(--in-brand-color-accent);
     font-weight: 500;

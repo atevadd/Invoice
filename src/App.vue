@@ -30,10 +30,19 @@ import AppSidebar from "./components/AppSidebar.vue";
 }
 main {
   position: relative;
+
+  @include mobile {
+    width: 100%;
+  }
 }
 .container {
   width: 65%;
   margin-inline: auto;
   margin-top: 3%;
+
+  @include mobile {
+    width: 90%;
+    margin-top: 5%;
+  }
 }
 </style>

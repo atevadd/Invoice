@@ -28,6 +28,8 @@ const modalStore = useModalStore();
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/_mixins.scss";
+
 .app-modal {
   position: absolute;
   top: 0;
@@ -37,7 +39,6 @@ const modalStore = useModalStore();
   max-height: 100vh;
   background-color: rgba($color: #000000, $alpha: 0.5);
   z-index: 99;
-  //   display: none;
 
   &-container {
     position: relative;
@@ -49,6 +50,11 @@ const modalStore = useModalStore();
     overflow-y: auto;
     animation: modal 0.6s ease;
     transition: 0.4s ease;
+
+    @include mobile {
+      width: 100%;
+      border-radius: 0px;
+    }
 
     // Customising the scrollbar for chrome and other webkit browsers
     &::-webkit-scrollbar {

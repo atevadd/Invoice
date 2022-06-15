@@ -5,14 +5,15 @@
       :type="type"
       :id="id"
       :value="modelValue"
+      minlength="1"
+      pattern="[A-Za-z]+"
+      title="Input field cannot be empty"
       @input="$emit('update:modelValue', $event.target.value)" />
   </div>
 </template>
 
 <script setup>
 import { validate } from "../assets/js/validate";
-// import { validate } from "json-schema";
-import { ref, shallowRef } from "vue";
 
 const props = defineProps({
   id: String,

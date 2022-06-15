@@ -3,7 +3,7 @@
     <label for="dropdown" id="toggle-dropdown">
       <input type="checkbox" id="dropdown" hidden ref="toggle" />
       <label for="dropdown" class="dropdown-text"
-        >Filter by status <i class="ri-arrow-down-s-line"></i
+        >Filter <span>by status</span> <i class="ri-arrow-down-s-line"></i
       ></label>
     </label>
     <div class="filter-dropdown" ref="dropdown">
@@ -45,6 +45,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/_mixins.scss";
+
 .filter {
   position: relative;
   margin-right: 20px;
@@ -62,7 +64,14 @@ onMounted(() => {
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  span {
+    @include mobile {
+      display: none;
+    }
+  }
 }
+
 .dropdown-text i {
   display: inline-block;
   margin-left: 10px;

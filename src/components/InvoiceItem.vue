@@ -21,12 +21,14 @@ const baseUrl = "/invoice/";
     <span class="invoice-date">Due {{ date }}</span>
     <span class="invoice-client">{{ client }}</span>
     <span class="invoice-amount">${{ amount }}</span>
-    <AppStatus status="paid" />
+    <AppStatus status="paid" id="status" />
     <span class="invoice-arrow"><i class="ri-arrow-right-s-line"></i></span>
   </RouterLink>
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/_mixins.scss";
+
 .invoice-item {
   position: relative;
   width: 100%;
@@ -42,17 +44,41 @@ const baseUrl = "/invoice/";
   align-items: center;
   justify-content: space-between;
   background-color: var(--color-card-bg);
+
+  @include mobile {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    // grid-template-rows: repeat(3, 1fr);
+    // row-gap: 20px;
+  }
 }
 
 .invoice-code {
   color: var(--color-text);
+
+  @include mobile {
+    grid-column: 1 / 2;
+  }
 }
 .invoice-amount {
   color: var(--color-text);
+
+  @include mobile {
+    grid-column: 1 / span 2;
+    grid-row: 3 / 3;
+  }
 }
 
 .invoice-item:hover {
   border: 1px solid var(--in-brand-color);
+}
+
+.invoice-date {
+  @include mobile {
+    grid-column: 1 / span 2;
+    grid-row: 2 / 3;
+    margin-top: 25px;
+  }
 }
 
 .invoice-date,
@@ -61,8 +87,29 @@ const baseUrl = "/invoice/";
   font-size: 0.9rem;
 }
 
+.invoice-client {
+  @include mobile {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    // border: 1px solid red;
+    justify-self: right;
+  }
+}
+#status {
+  @include mobile {
+    grid-column: 2 / span 1;
+    grid-row: 2 / 4;
+    justify-self: right;
+    align-self: center;
+    // border: 1px solid red;
+  }
+}
 .invoice-arrow {
   color: var(--in-brand-color);
   font-weight: 800;
+
+  @include mobile {
+    display: none;
+  }
 }
 </style>
