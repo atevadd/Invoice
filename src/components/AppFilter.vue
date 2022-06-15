@@ -3,7 +3,8 @@
     <label for="dropdown" id="toggle-dropdown">
       <input type="checkbox" id="dropdown" hidden ref="toggle" />
       <label for="dropdown" class="dropdown-text"
-        >Filter <span>by status</span> <i class="ri-arrow-down-s-line"></i
+        ><span>Filter</span><span class="hide"> by status</span>
+        <i class="ri-arrow-down-s-line"></i
       ></label>
     </label>
     <div class="filter-dropdown" ref="dropdown">
@@ -65,7 +66,7 @@ onMounted(() => {
   align-items: center;
   cursor: pointer;
 
-  span {
+  .hide {
     @include mobile {
       display: none;
     }

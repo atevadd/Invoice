@@ -239,7 +239,9 @@ const addInvoice = () => {
 
       <footer>
         <div class="left">
-          <AppButton class="edit" @click="modalStore.closeModal"
+          <AppButton
+            class="edit"
+            @click="[modalStore.closeModal(), invoiceStore.clearInvoice()]"
             >Discard</AppButton
           >
         </div>
@@ -300,6 +302,24 @@ header {
 .invoice-list {
   width: 100%;
   position: relative;
+  overflow-y: auto;
+  height: 80vh;
+
+  // Customising the scrollbar for chrome and other webkit browsers
+  &::-webkit-scrollbar {
+    width: 0.5vw;
+    cursor: pointer;
+    display: none;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--in-text-dark-2);
+    border-radius: 20px;
+  }
 }
 
 .empty {
@@ -326,6 +346,7 @@ header {
     position: absolute;
     top: 18px;
     right: 18px;
+    display: none;
 
     i {
       font-size: 1.8rem;

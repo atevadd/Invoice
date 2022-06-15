@@ -6,7 +6,6 @@
       :id="id"
       :value="modelValue"
       minlength="1"
-      pattern="[A-Za-z]+"
       title="Input field cannot be empty"
       @input="$emit('update:modelValue', $event.target.value)" />
   </div>

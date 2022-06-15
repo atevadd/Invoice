@@ -385,8 +385,10 @@ header {
     }
 
     .invoice-date {
-      grid-column: 1 / 2;
-      grid-row: 3 / 4;
+      @include mobile {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+      }
     }
 
     p {
@@ -463,6 +465,7 @@ header {
     position: absolute;
     top: 18px;
     right: 18px;
+    display: none;
 
     i {
       font-size: 1.8rem;
