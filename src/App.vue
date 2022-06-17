@@ -1,5 +1,16 @@
 <script setup>
-import AppSidebar from "./components/AppSidebar.vue";
+import { dbInitialisation } from "@/database/db.js";
+import { onMounted } from "vue";
+import AppSidebar from "@/components/AppSidebar.vue";
+import { useInvoiceStore } from "./stores/invoice";
+
+const invoiceStore = useInvoiceStore();
+
+// Setup database when page is initialized
+onMounted(() => {
+  dbInitialisation();
+  invoiceStore.fetchInvoiceFromDatabase();
+});
 </script>
 
 <template>

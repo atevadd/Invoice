@@ -224,7 +224,7 @@
     </form>
   </AppModal>
 
-  <DeleteModal :invoice-id="route.params.id" />
+  <DeleteModal :invoice-id="Number(route.params.id)" />
 </template>
 
 <script setup>

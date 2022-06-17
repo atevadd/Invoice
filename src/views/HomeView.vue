@@ -8,13 +8,14 @@ import AppDropdown from "../components/AppDropdown.vue";
 import { useModalStore } from "../stores/modal";
 import { useInvoiceStore } from "../stores/invoice";
 import { countries } from "../assets/js/country.js";
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 import { useToast } from "vue-toastification";
 import {
   calculateTotalPrice,
   addMetaData,
   removeMetaData,
 } from "../assets/js/helper";
+import { db } from "../database/db";
 
 // Store Instances
 const modalStore = useModalStore();
@@ -24,34 +25,65 @@ const invoiceStore = useInvoiceStore();
 const toast = useToast();
 
 // ALl invoices from the store
-let allInvoices = ref(invoiceStore.getAllInvoice);
+let allInvoices = reactive(invoiceStore.getAllInvoice);
+
+// Add invoice to database
+async function addInvoiceToDatabase() {
+  try {
+    const id = await db
+      .table("invoice")
+      .add(JSON.parse(JSON.stringify(invoiceStore.getInvoice)))
+      .then(() => {
+        // Showing the success message
+        toast.success("Invoice added successfully", {
+          position: "bottom-right",
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: false,
+          icon: true,
+          rtl: false,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    // Showing the success message
+    toast.error("operation not successful", {
+      position: "bottom-right",
+      timeout: 3000,
+      closeOnClick: false,
+      pauseOnFocusLoss: true,
+      pauseOnHover: true,
+      draggable: true,
+      draggablePercent: 0.6,
+      showCloseButtonOnHover: false,
+      hideProgressBar: true,
+      closeButton: false,
+      icon: true,
+      rtl: false,
+    });
+  }
+}
 
 // Add new invoice item
 const addInvoice = () => {
   // Add new invoice item to the store
   invoiceStore.addNewInvoice(invoiceStore.getInvoice);
 
+  addInvoiceToDatabase();
+
   // Clearing the invoice form
   invoiceStore.clearInvoice();
 
   // closing the modal
   modalStore.closeModal();
-
-  // Showing the success message
-  toast.success("Invoice added successfully", {
-    position: "bottom-right",
-    timeout: 3000,
-    closeOnClick: false,
-    pauseOnFocusLoss: true,
-    pauseOnHover: true,
-    draggable: true,
-    draggablePercent: 0.6,
-    showCloseButtonOnHover: false,
-    hideProgressBar: true,
-    closeButton: false,
-    icon: true,
-    rtl: false,
-  });
 };
 </script>
 

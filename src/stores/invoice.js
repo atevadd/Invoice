@@ -1,5 +1,10 @@
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
 import { ref } from "vue";
+import { db } from "../database/db";
+// import { useToast } from "vue-toastification";
+
+// // Toast instance
+// const toast = useToast();
 
 export const useInvoiceStore = defineStore({
   id: "invoice",
@@ -40,6 +45,57 @@ export const useInvoiceStore = defineStore({
     },
   },
   actions: {
+    async fetchInvoiceFromDatabase() {
+      let allDatabaseInvoice = await db
+        .table("invoice")
+        .toArray()
+        .then((result) => {
+          this.allInvoice = result;
+        });
+    },
+    async deleteInvoiceFromDatabase(id) {
+      const deleted = await db.table("invoice").delete(id + 1);
+      console.log("Invoice deleted");
+    },
+    updateInvoiceInDatabase(id, obj) {
+      db.table("invoice")
+        .update(id + 1, obj)
+        .then((updated) => {
+          if (updated) {
+            // Showing the success message
+            toast.success("Invoice updated", {
+              position: "bottom-right",
+              timeout: 3000,
+              closeOnClick: false,
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              draggable: true,
+              draggablePercent: 0.6,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: false,
+              icon: true,
+              rtl: false,
+            });
+          } else {
+            // Showing the success message
+            toast.error("Invoice could not be updated", {
+              position: "bottom-right",
+              timeout: 3000,
+              closeOnClick: false,
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              draggable: true,
+              draggablePercent: 0.6,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: false,
+              icon: true,
+              rtl: false,
+            });
+          }
+        });
+    },
     addNewInvoice(invoice) {
       this.allInvoice.push(invoice);
     },
@@ -69,9 +125,15 @@ export const useInvoiceStore = defineStore({
     },
     editCurrentInvoice(id, obj) {
       this.allInvoice[id] = obj;
+      // this.updateInvoiceInDatabase(id, obj);
     },
     deleteCurrentInvoice(id) {
       this.allInvoice.splice(id, 1);
+      this.deleteInvoiceFromDatabase(id);
     },
   },
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useInvoiceStore, import.meta.hot));
+}
