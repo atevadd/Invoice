@@ -52,10 +52,6 @@ export const useInvoiceStore = defineStore({
         .then((result) => {
           this.allInvoice = result;
         });
-
-      const data = await db.table("invoice").toCollection();
-
-      console.log(data);
     },
     async deleteInvoiceFromDatabase(id) {
       const deleted = await db.table("invoice").delete(id + 1);
@@ -128,7 +124,6 @@ export const useInvoiceStore = defineStore({
     },
     editCurrentInvoice(id, obj) {
       this.allInvoice[id] = obj;
-      // this.updateInvoiceInDatabase(id, obj);
     },
     deleteCurrentInvoice(id) {
       this.allInvoice.splice(id, 1);
