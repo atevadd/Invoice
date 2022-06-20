@@ -8,7 +8,7 @@ import AppDropdown from "../components/AppDropdown.vue";
 import { useModalStore } from "../stores/modal";
 import { useInvoiceStore } from "../stores/invoice";
 import { countries } from "../assets/js/country.js";
-import { ref, computed, reactive } from "vue";
+import { ref, computed } from "vue";
 import { useToast } from "vue-toastification";
 import {
   calculateTotalPrice,
@@ -25,7 +25,11 @@ const invoiceStore = useInvoiceStore();
 const toast = useToast();
 
 // ALl invoices from the store
-let allInvoices = reactive(invoiceStore.getAllInvoice);
+// let allInvoices = ref(invoiceStore.getAllInvoice);
+
+const allInvoices = computed(() => {
+  return ref(invoiceStore.getAllInvoice);
+});
 
 // Add invoice to database
 async function addInvoiceToDatabase() {
@@ -91,15 +95,15 @@ const addInvoice = () => {
   <header>
     <div class="heading-text">
       <h1 class="heading">Invoice</h1>
-      <p class="subheading" v-if="allInvoices.length > 1">
-        <span class="hide">There are a total of </span>
-        <span>{{ allInvoices.length }} invoices</span>
+      <p class="subheading" v-if="invoiceStore.getAllInvoice.length > 1">
+        <!-- <span class="hide">There is a total of </span> -->
+        <span>{{ invoiceStore.getAllInvoice.length }} invoices</span>
       </p>
-      <p class="subheading" v-else-if="allInvoices.length == 1">
-        <span class="hide">There are a total of </span>
-        <span>{{ allInvoices.length }} invoice</span>
+      <p class="subheading" v-else-if="invoiceStore.getAllInvoice.length == 1">
+        <!-- <span class="hide">There is a total of </span> -->
+        <span>{{ invoiceStore.getAllInvoice.length }} invoice</span>
       </p>
-      <p class="subheading" v-else-if="allInvoices.length == 0">
+      <p class="subheading" v-else-if="invoiceStore.getAllInvoice.length == 0">
         <span>No invoice</span>
       </p>
     </div>
@@ -112,9 +116,9 @@ const addInvoice = () => {
     </div>
   </header>
   <!-- The invoice listing here -->
-  <section class="invoice-list" v-if="allInvoices.length > 0">
+  <section class="invoice-list" v-if="invoiceStore.getAllInvoice.length > 0">
     <InvoiceItem
-      v-for="(item, index) in allInvoices"
+      v-for="(item, index) in invoiceStore.getAllInvoice"
       :id="index"
       :key="index"
       :itemid="index"
@@ -125,7 +129,7 @@ const addInvoice = () => {
       status="paid" />
   </section>
   <section class="empty" v-else>
-    <img src="@/assets/images/empty.png" alt="" />
+    <img src="@/assets/images/empty.png" alt="empty state illustration" />
     <h1>There is nothing here</h1>
     <p>
       Create an invoice by clicking the <br />

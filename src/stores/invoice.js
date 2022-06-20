@@ -52,10 +52,13 @@ export const useInvoiceStore = defineStore({
         .then((result) => {
           this.allInvoice = result;
         });
+
+      const data = await db.table("invoice").toCollection();
+
+      console.log(data);
     },
     async deleteInvoiceFromDatabase(id) {
       const deleted = await db.table("invoice").delete(id + 1);
-      console.log("Invoice deleted");
     },
     updateInvoiceInDatabase(id, obj) {
       db.table("invoice")
