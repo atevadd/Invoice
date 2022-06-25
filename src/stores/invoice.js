@@ -1,10 +1,10 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import { ref } from "vue";
 import { db } from "../database/db";
-// import { useToast } from "vue-toastification";
+import { useToast } from "vue-toastification";
 
 // // Toast instance
-// const toast = useToast();
+const toast = useToast();
 
 export const useInvoiceStore = defineStore({
   id: "invoice",
@@ -53,6 +53,51 @@ export const useInvoiceStore = defineStore({
           this.allInvoice = result;
         });
     },
+    // Add invoice to database
+    async addInvoiceToDatabase(data) {
+      try {
+        const id = await db
+          .table("invoice")
+          .add(JSON.parse(JSON.stringify(data)))
+          .then((id) => {
+            // Showing the success message
+            toast.success("Invoice added successfully", {
+              position: "bottom-right",
+              timeout: 3000,
+              closeOnClick: false,
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              draggable: true,
+              draggablePercent: 0.6,
+              showCloseButtonOnHover: false,
+              hideProgressBar: true,
+              closeButton: false,
+              icon: true,
+              rtl: false,
+            });
+            console.log(id);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } catch (error) {
+        // Showing the success message
+        toast.error("operation not successful", {
+          position: "bottom-right",
+          timeout: 3000,
+          closeOnClick: false,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: false,
+          icon: true,
+          rtl: false,
+        });
+      }
+    },
     async deleteInvoiceFromDatabase(id) {
       const deleted = await db.table("invoice").delete(id + 1);
     },
@@ -97,6 +142,7 @@ export const useInvoiceStore = defineStore({
     },
     addNewInvoice(invoice) {
       this.allInvoice.push(invoice);
+      this.addInvoiceToDatabase(invoice);
     },
     clearInvoice() {
       this.invoice = {

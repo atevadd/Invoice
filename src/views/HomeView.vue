@@ -31,57 +31,10 @@ const allInvoices = computed(() => {
   return ref(invoiceStore.getAllInvoice);
 });
 
-// Add invoice to database
-async function addInvoiceToDatabase() {
-  try {
-    const id = await db
-      .table("invoice")
-      .add(JSON.parse(JSON.stringify(invoiceStore.getInvoice)))
-      .then(() => {
-        // Showing the success message
-        toast.success("Invoice added successfully", {
-          position: "bottom-right",
-          timeout: 3000,
-          closeOnClick: false,
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          draggable: true,
-          draggablePercent: 0.6,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
-          closeButton: false,
-          icon: true,
-          rtl: false,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    // Showing the success message
-    toast.error("operation not successful", {
-      position: "bottom-right",
-      timeout: 3000,
-      closeOnClick: false,
-      pauseOnFocusLoss: true,
-      pauseOnHover: true,
-      draggable: true,
-      draggablePercent: 0.6,
-      showCloseButtonOnHover: false,
-      hideProgressBar: true,
-      closeButton: false,
-      icon: true,
-      rtl: false,
-    });
-  }
-}
-
 // Add new invoice item
 const addInvoice = () => {
   // Add new invoice item to the store
   invoiceStore.addNewInvoice(invoiceStore.getInvoice);
-
-  addInvoiceToDatabase();
 
   // Clearing the invoice form
   invoiceStore.clearInvoice();
