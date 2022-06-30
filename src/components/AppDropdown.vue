@@ -4,6 +4,7 @@
     <select
       :id="id"
       :value="modelValue"
+      required
       @change="$emit('update:modelValue', $event.target.value)">
       <option value="" disabled>~ Select a option ~</option>
       <option v-for="(items, index) in listItems" :key="index" :value="items">

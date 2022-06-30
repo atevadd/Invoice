@@ -7,6 +7,7 @@
       :value="modelValue"
       minlength="1"
       title="Input field cannot be empty"
+      required
       @input="$emit('update:modelValue', $event.target.value)" />
   </div>
 </template>
